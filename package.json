@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "serve": "parcel serve ./src/index.html --open --port 2900"
+    "serve": "parcel serve ./src/index.html --open --port 2900",
+    "build": "parcel build ./src/index.html"
   },
   "author": "",
   "license": "ISC",
