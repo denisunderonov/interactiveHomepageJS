@@ -1,0 +1,237 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    margin: 0;
+}
+
+.app {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+#todo li {
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(219,153,242,1) 0%, rgba(255,209,209,1) 100%);
+    display: flex;
+}
+
+.app {
+    width: 100%;
+    height: 100%;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+#todo {
+    width: auto;
+    height: auto;
+    -webkit-box-shadow: 0px 0px 57px 0px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 0px 57px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 0px 57px 0px rgba(34, 60, 80, 0.2);
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    gap: 100px;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+#todo ul li {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#checklist li p {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+#notes li p {
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+#noteslist {
+    max-width: 60%;
+}
+
+#checklist {
+    max-width: 40%;
+}
+
+.check-button {
+    border-radius: 50%;
+    border-style: none;
+    background-color: #fff;
+    min-width: 30px;
+    height: 30px;
+}
+
+#todo li p {
+    max-width: auto;
+    height: auto;
+}
+
+#todo input {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+#todo input {
+    display: none;
+}
+
+#todo p {
+    word-break: break-all;
+}
+
+#todo .plus-button {
+    display: none;
+    border-radius: 10px;
+    border-style: none;
+    background-color: #fff;
+    width: 60px;
+    height: 45px;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+.note-button {
+    border-radius: 5px;
+    border-style: none;
+    background-color: #fff;
+    min-width: 30px;
+    height: 30px;
+    font-weight: bold;
+    font-size: 15px;
+    align-self: flex-start;
+}
+
+button:hover {
+    opacity: 90%;
+}
+
+button:active {
+    opacity: 80%;
+}
+
+#checklist {
+    height: fit-content;
+    border-radius: 10px;
+    padding: 20px;
+    background: rgb(212,207,29);
+    background: linear-gradient(90deg, rgba(212,207,29,1) 0%, rgba(255,240,140,1) 100%); 
+}
+
+#checklist ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#checklist li {
+    border-radius: 10px;
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+    -webkit-box-shadow: 0px 0px 57px 0px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 0px 57px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 0px 57px 0px rgba(34, 60, 80, 0.2);
+}
+
+
+.add-check-button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+.add-notes-button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+.check-button {
+    margin-right: auto;
+}
+
+#checklist ul li div {
+    display: none;
+}
+
+#todo li p {
+    margin-right: auto;
+}
+
+#noteslist ul {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    -webkit-box-shadow: 0px 0px 57px 0px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 0px 57px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 0px 57px 0px rgba(34, 60, 80, 0.2);
+    border-radius: 10px;
+}
+
+#noteslist li {
+    padding: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 57px 0px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 0px 57px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 0px 57px 0px rgba(34, 60, 80, 0.2);
+}

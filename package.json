@@ -1,0 +1,16 @@
+{
+  "name": "interactivePageVanilaJS",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "serve": "parcel serve ./src/index.html --open --port 2900"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.11.0"
+  },
+  "dependencies": {
+    "uuid": "^9.0.1"
+  }
+}
