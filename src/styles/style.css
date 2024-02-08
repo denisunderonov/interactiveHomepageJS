@@ -46,6 +46,9 @@ body {
     height: 100%;
     padding-left: 100px;
     padding-right: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
 }
 
 #todo {
@@ -235,3 +238,75 @@ button:active {
     -moz-box-shadow: 0px 0px 57px 0px rgba(34, 60, 80, 0.2);
     box-shadow: 0px 0px 57px 0px rgba(34, 60, 80, 0.2);
 }
+
+/* калькулятор */
+
+#calculatorblock {
+    max-width: auto;
+    height: auto;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, rgba(151, 147, 233, 0.253) 0%, rgba(178, 108, 204, 0.45) 35%, rgba(0, 213, 255, 0.144) 400%); 
+}
+
+#calculator #zero {
+    width: 100%;
+}
+
+#calculator button {
+    border-radius: 5px;
+    border-style: none;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: large;
+}
+
+#calculator button:active {
+    opacity: 90%;
+}
+
+#calculator .buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+#calculator .buttons div button {
+    width: 60px;
+    height: 60px;
+}
+#calculator #input {
+    width: 100%;
+    margin-bottom: 20px;
+    height: 50px;
+    border-radius: 5px;
+    border: none;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: medium;
+    padding-left: 10px;
+}
+
+#calculator .buttons div {
+    width: 100%;
+}
+
+#input:active {
+    border: none;
+}
+
+#input:focus {
+    border-style: none;
+}
+
+#result {
+    height: 60px;
+}
+
+#bigplus {
+    width: 100%;
+    height: 60px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+

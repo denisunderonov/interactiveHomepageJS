@@ -1,6 +1,6 @@
 import { base } from "./data";
 import { initeNote } from "./utils";
-import { addClick, delItem, pushItem } from "./template";
+import { addClick, calculatorFunctionalOn, calculatorRender, delItem, pushItem } from "./template";
 
 const $app = document.querySelector('#todo');
 $app.innerHTML = initeNote(base[0], base[1]);
@@ -14,6 +14,8 @@ const $noteslist = $app.querySelector('#noteslist > ul');
 const $addNoteItemButton = document.querySelector('.add-notes-button');
 const $inputNoteList = document.querySelector('#note-input');
 const $notePlusButton = $noteslist.querySelector('.plus-button');
+//калькулятор 
+const $calculator = document.querySelector('#calculatorblock');
 
 
 export class App {
@@ -23,6 +25,7 @@ export class App {
     init() {
         this.checkListStart();
         this.noteslistStart();
+        this.calculatorStart();
     }
 
     checkListStart() {
@@ -35,6 +38,11 @@ export class App {
         addClick($addNoteItemButton, $inputNoteList, $notePlusButton);
         pushItem($notePlusButton, $inputNoteList, $addNoteItemButton, $noteslist, 1);
         delItem($noteslist, 1);
+    }
+
+    calculatorStart() {
+        calculatorRender($calculator);
+        calculatorFunctionalOn($calculator);
     }
 
 }

@@ -602,11 +602,14 @@ const $noteslist = $app.querySelector("#noteslist > ul");
 const $addNoteItemButton = document.querySelector(".add-notes-button");
 const $inputNoteList = document.querySelector("#note-input");
 const $notePlusButton = $noteslist.querySelector(".plus-button");
+//калькулятор 
+const $calculator = document.querySelector("#calculatorblock");
 class App {
     constructor(){}
     init() {
         this.checkListStart();
         this.noteslistStart();
+        this.calculatorStart();
     }
     checkListStart() {
         (0, _template.addClick)($addCheckItemButton, $inputChecklist, $checkPlusButton);
@@ -618,146 +621,13 @@ class App {
         (0, _template.pushItem)($notePlusButton, $inputNoteList, $addNoteItemButton, $noteslist, 1);
         (0, _template.delItem)($noteslist, 1);
     }
+    calculatorStart() {
+        (0, _template.calculatorRender)($calculator);
+        (0, _template.calculatorFunctionalOn)($calculator);
+    }
 }
 
-},{"./utils":"bVlgj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./data":"aryXu","./template":"4dVgu"}],"bVlgj":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "addItem", ()=>addItem);
-parcelHelpers.export(exports, "initeNote", ()=>initeNote);
-var _template = require("./template");
-function addItem(type, content) {
-    if (type === "checklist") {
-        let checkstroke = toLi(`
-        <button class="check-button"></button>
-        <p>${content}</p>
-        `, (0, _template.state).checkId);
-        (0, _template.state).checkId += 1;
-        return checkstroke;
-    } else if (type === "notelist") {
-        let notestroke = toLi(`
-        <button class="note-button">\u{2718}</button>
-        <p>${content}</p>
-        `, (0, _template.state).noteId);
-        (0, _template.state).noteId += 1;
-        return notestroke;
-    } else return console.log("\u041E\u0448\u0438\u0431\u043A\u0430");
-}
-function addButton(type) {
-    if (type === "notelist") return `<li>
-        <input type="text" id="note-input">
-        <button class="add-notes-button">\u{434}\u{43E}\u{431}\u{430}\u{432}\u{438}\u{442}\u{44C} \u{437}\u{430}\u{43F}\u{438}\u{441}\u{44C}</button>
-        <button class="plus-button">+</button> 
-        </li>`;
-    else if (type === "checklist") return `<li>
-        <input type="text" id="check-input">
-        <button class="add-check-button">\u{434}\u{43E}\u{431}\u{430}\u{432}\u{438}\u{442}\u{44C} \u{446}\u{435}\u{43B}\u{44C}</button>
-        <button class="plus-button">+</button> </li>`;
-}
-function initeNote(checkObj, noteObj) {
-    return `
-        <div id="checklist">
-            <ul>
-                ${addButton(checkObj.type)}
-            </ul>
-        </div>
-        <div id="noteslist">
-            <ul>
-                ${addButton(noteObj.type)}
-            </ul>
-        </div>
-        `;
-}
-function toLi(content, id) {
-    return `<li data-id="${id}">${content}</li>`;
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./template":"4dVgu"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || Object.prototype.hasOwnProperty.call(dest, key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"4dVgu":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "state", ()=>state);
-parcelHelpers.export(exports, "addClick", ()=>addClick);
-parcelHelpers.export(exports, "pushItem", ()=>pushItem);
-parcelHelpers.export(exports, "delItem", ()=>delItem);
-var _data = require("./data");
-var _utils = require("./utils");
-const state = {
-    checkId: 0,
-    noteId: 0
-};
-function addClick($addItemButton, $inputlist, $plusButton) {
-    $addItemButton.addEventListener("click", ()=>{
-        $inputlist.value = "";
-        $addItemButton.style.display = "none";
-        $plusButton.style.display = "block";
-        $inputlist.style.display = "block";
-    });
-}
-function pushItem($plusButton, $inputlist, $addItemButton, $list, listType) {
-    $plusButton.addEventListener("click", ()=>{
-        if ($inputlist.value != "") {
-            let listid;
-            if (listType === 0) listid = state.checkId;
-            else if (listType === 1) listid = state.noteId;
-            (0, _data.base)[listType].values.push({
-                id: listid,
-                value: $inputlist.value
-            });
-            $plusButton.style.display = "none";
-            $inputlist.style.display = "none";
-            $addItemButton.style.display = "block";
-            $list.insertAdjacentHTML("beforeend", (0, _utils.addItem)((0, _data.base)[listType].type, (0, _data.base)[listType].values[(0, _data.base)[listType].values.length - 1].value));
-        } else alert("\u041F\u0443\u0441\u0442\u043E\u0435 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435");
-    });
-}
-function delItem($list, listType) {
-    $list.addEventListener("click", (event)=>{
-        let buttonFlag;
-        listType === 0 ? buttonFlag = "check-button" : buttonFlag = "note-button";
-        if (event.target.classList.contains(buttonFlag)) {
-            event.target.parentNode.remove();
-            const $blockDataId = event.target.parentNode.dataset.id;
-            (0, _data.base)[listType].values.forEach((item, index)=>{
-                if (item.id == $blockDataId) {
-                    (0, _data.base)[listType].values.splice(index, 1);
-                    console.log((0, _data.base)[listType].values);
-                }
-            });
-        }
-    });
-}
-
-},{"./data":"aryXu","./utils":"bVlgj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aryXu":[function(require,module,exports) {
+},{"./data":"aryXu","./utils":"bVlgj","./template":"4dVgu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aryXu":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "base", ()=>base);
@@ -789,6 +659,234 @@ class Notelist extends List {
     }
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["1D0jQ","8ZNvh"], "8ZNvh", "parcelRequire0a0e")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || Object.prototype.hasOwnProperty.call(dest, key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"bVlgj":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "addItem", ()=>addItem);
+parcelHelpers.export(exports, "initeNote", ()=>initeNote);
+parcelHelpers.export(exports, "back", ()=>back);
+parcelHelpers.export(exports, "sqrt", ()=>sqrt);
+parcelHelpers.export(exports, "toCalcbase", ()=>toCalcbase);
+parcelHelpers.export(exports, "calcBase", ()=>calcBase);
+var _template = require("./template");
+function addItem(type, content) {
+    if (type === "checklist") {
+        let checkstroke = toLi(`
+        <button class="check-button"></button>
+        <p>${content}</p>
+        `, (0, _template.todoState).checkId);
+        (0, _template.todoState).checkId += 1;
+        return checkstroke;
+    } else if (type === "notelist") {
+        let notestroke = toLi(`
+        <button class="note-button">\u{2718}</button>
+        <p>${content}</p>
+        `, (0, _template.todoState).noteId);
+        (0, _template.todoState).noteId += 1;
+        return notestroke;
+    } else return console.log("\u041E\u0448\u0438\u0431\u043A\u0430");
+}
+function addButton(type) {
+    if (type === "notelist") return `<li>
+        <input type="text" id="note-input">
+        <button class="add-notes-button">\u{434}\u{43E}\u{431}\u{430}\u{432}\u{438}\u{442}\u{44C} \u{437}\u{430}\u{43F}\u{438}\u{441}\u{44C}</button>
+        <button class="plus-button">+</button> 
+        </li>`;
+    else if (type === "checklist") return `<li>
+        <input type="text" id="check-input">
+        <button class="add-check-button">\u{434}\u{43E}\u{431}\u{430}\u{432}\u{438}\u{442}\u{44C} \u{446}\u{435}\u{43B}\u{44C}</button>
+        <button class="plus-button">+</button> </li>`;
+}
+function initeNote(checkObj, noteObj) {
+    return `
+        <div id="checklist">
+            <ul>
+                ${addButton(checkObj.type)}
+            </ul>
+        </div>
+        <div id="noteslist">
+            <ul>
+                ${addButton(noteObj.type)}
+            </ul>
+        </div>
+        `;
+}
+function toLi(content, id) {
+    return `<li data-id="${id}">${content}</li>`;
+}
+function back($input) {
+    $input.value = $input.value.substring(0, $input.value.length - 1);
+}
+function sqrt($input) {
+    $input.value = Math.pow(Number($input.value), 2);
+}
+function toCalcbase(state, $input, $button) {
+    state.firstNum = Number($input.value);
+    state.mathOperation = $button.textContent;
+    $input.value = "";
+}
+function calcBase(state, $input) {
+    const secondNum = Number($input.value);
+    switch(state.mathOperation){
+        case "+":
+            $input.value = state.firstNum + secondNum;
+            break;
+        case "-":
+            $input.value = state.firstNum - secondNum;
+            break;
+        case "*":
+            $input.value = state.firstNum * secondNum;
+            break;
+        case "\xf7":
+            $input.value = state.firstNum / secondNum;
+            break;
+    }
+    state.firstNum = 0;
+}
+
+},{"./template":"4dVgu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4dVgu":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "todoState", ()=>todoState);
+parcelHelpers.export(exports, "addClick", ()=>addClick);
+parcelHelpers.export(exports, "pushItem", ()=>pushItem);
+parcelHelpers.export(exports, "delItem", ()=>delItem);
+parcelHelpers.export(exports, "calculatorRender", ()=>calculatorRender);
+parcelHelpers.export(exports, "calculatorFunctionalOn", ()=>calculatorFunctionalOn);
+var _data = require("./data");
+var _utils = require("./utils");
+const todoState = {
+    checkId: 0,
+    noteId: 0
+};
+function addClick($addItemButton, $inputlist, $plusButton) {
+    $addItemButton.addEventListener("click", ()=>{
+        $inputlist.value = "";
+        $addItemButton.style.display = "none";
+        $plusButton.style.display = "block";
+        $inputlist.style.display = "block";
+    });
+}
+function pushItem($plusButton, $inputlist, $addItemButton, $list, listType) {
+    $plusButton.addEventListener("click", ()=>{
+        if ($inputlist.value != "") {
+            let listid;
+            if (listType === 0) listid = todoState.checkId;
+            else if (listType === 1) listid = todoState.noteId;
+            (0, _data.base)[listType].values.push({
+                id: listid,
+                value: $inputlist.value
+            });
+            $plusButton.style.display = "none";
+            $inputlist.style.display = "none";
+            $addItemButton.style.display = "block";
+            $list.insertAdjacentHTML("beforeend", (0, _utils.addItem)((0, _data.base)[listType].type, (0, _data.base)[listType].values[(0, _data.base)[listType].values.length - 1].value));
+        } else alert("\u041F\u0443\u0441\u0442\u043E\u0435 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435");
+    });
+}
+function delItem($list, listType) {
+    $list.addEventListener("click", (event)=>{
+        let buttonFlag;
+        listType === 0 ? buttonFlag = "check-button" : buttonFlag = "note-button";
+        if (event.target.classList.contains(buttonFlag)) {
+            event.target.parentNode.remove();
+            const $blockDataId = event.target.parentNode.dataset.id;
+            (0, _data.base)[listType].values.forEach((item, index)=>{
+                if (item.id == $blockDataId) {
+                    (0, _data.base)[listType].values.splice(index, 1);
+                    console.log((0, _data.base)[listType].values);
+                }
+            });
+        }
+    });
+}
+function calculatorRender($calculator) {
+    $calculator.innerHTML = `
+        <form action="" id="calculator">
+            <input type="text" name="" id="input" readonly>
+                <div class="buttons">
+                    <div>
+                        <button>C</button>
+                        <button>\u{2BA8}</button>
+                        <button>x\xb2</button>
+                    </div>
+                    <div>
+                        <button>1</button>
+                        <button>2</button>
+                        <button>3</button>
+                    </div>
+                    <div>
+                        <button>4</button>
+                        <button>5</button>
+                        <button>6</button>
+                    </div>
+                    <div>
+                        <button>7</button>
+                        <button>8</button>
+                        <button>9</button>
+                    </div>
+                    <div><button id="zero">0</button></div>
+                    <div>
+                        <button>\xf7</button>
+                        <button>*</button>
+                        <button>-</button>
+                    </div>
+                    <button id="bigplus">+</button>
+                    <button id="result" type="submit">=</button>
+                </div>
+            </form>
+    `;
+}
+function calculatorFunctionalOn($calculator) {
+    const $calcbuttons = $calculator.querySelectorAll("button");
+    const $calcInput = $calculator.querySelector("#input");
+    const calcState = {
+        firstNum: 0,
+        mathOperation: null
+    };
+    $calcbuttons.forEach(($button)=>{
+        $button.addEventListener("click", (e)=>{
+            e.preventDefault();
+            if ($button.textContent === "C") $calcInput.value = "";
+            else if ($button.textContent === "\u2BA8") (0, _utils.back)($calcInput);
+            else if ($button.textContent === "x\xb2") (0, _utils.sqrt)($calcInput);
+            else if ($button.textContent === "\xf7" || $button.textContent === "*" || $button.textContent === "+" || $button.textContent === "-") (0, _utils.toCalcbase)(calcState, $calcInput, $button);
+            else if ($button.textContent === "=") (0, _utils.calcBase)(calcState, $calcInput);
+            else $calcInput.value += $button.textContent;
+        });
+    });
+}
+
+},{"./data":"aryXu","./utils":"bVlgj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["1D0jQ","8ZNvh"], "8ZNvh", "parcelRequire0a0e")
 
 //# sourceMappingURL=index.f5c48570.js.map

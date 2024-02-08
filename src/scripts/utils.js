@@ -1,19 +1,19 @@
-import { state } from "./template"
+import { todoState } from "./template"
 
 export function addItem(type, content) {
     if (type === 'checklist') {
         let checkstroke = toLi(`
         <button class="check-button"></button>
         <p>${content}</p>
-        `, state.checkId)
-        state.checkId += 1;
+        `, todoState.checkId)
+        todoState.checkId += 1;
         return checkstroke;   
     } else if (type === 'notelist') {
         let notestroke = toLi(`
         <button class="note-button">✘</button>
         <p>${content}</p>
-        `, state.noteId)
-        state.noteId += 1;
+        `, todoState.noteId)
+        todoState.noteId += 1;
         return notestroke;
     } else {
         return console.log('Ошибка')
@@ -54,3 +54,31 @@ function toLi(content, id) {
     return `<li data-id="${id}">${content}</li>`
 }
 
+export function back($input) {
+    $input.value = $input.value.substring(0, $input.value.length - 1);
+}
+
+export function sqrt($input) {
+    $input.value = Math.pow(Number($input.value), 2);
+}
+
+export function toCalcbase(state ,$input, $button) {
+    state.firstNum = Number($input.value);
+    state.mathOperation = $button.textContent;
+    $input.value = '';
+}
+
+export function calcBase(state, $input) {
+    const secondNum = Number($input.value);
+            switch (state.mathOperation) {
+                case '+': $input.value = state.firstNum + secondNum
+                break;
+                case '-': $input.value = state.firstNum - secondNum
+                break;
+                case '*': $input.value = state.firstNum * secondNum
+                break;
+                case '÷': $input.value = state.firstNum / secondNum
+                break;
+            }
+            state.firstNum = 0;
+}
