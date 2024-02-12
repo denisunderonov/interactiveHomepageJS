@@ -17,3 +17,9 @@ export class Notelist extends List {
     }
 }
 
+export class AudioList extends List {
+    constructor(type, values) {
+        super(type, values);
+    }
+}
+

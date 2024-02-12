@@ -1,9 +1,19 @@
+
 import { base } from "./data";
-import { addItem, back, toCalcbase, calcBase, sqrt } from "./utils";
+import { addItem, back, toCalcbase, calcBase, sqrt, pushTrack, getAudioControls, getAudioImage } from "./utils";
+import { getProfile } from "./audio";
+import { track_id } from "./audio";
+import { $player } from "./app";
+
 
 export const todoState = {
     checkId: 0,
     noteId: 0
+}
+
+export const musicData = {
+    track: '',
+    currentNumber: -1
 }
 
 export function addClick($addItemButton, $inputlist, $plusButton) {
@@ -117,4 +127,86 @@ export function calculatorFunctionalOn($calculator) {
             }
         });
     });
+}
+
+export async function addTrackData() {
+    for (let i = 0; i < track_id.length; i++) {
+        const audioData = await getProfile(i);
+        // if (audioData.preview_url === null) {
+        //     console.log('песни нет')
+        //     break;
+        // } 
+        base[2].values[i] = {}
+        base[2].values[i].listId = i
+        base[2].values[i].id = audioData.id;
+        base[2].values[i].trackName = audioData.name;
+        base[2].values[i].artist = audioData.artists[0].name;
+        base[2].values[i].duration = audioData.duration_ms;
+        base[2].values[i].trackImage = audioData.album.images[0].url;
+        base[2].values[i].url = `../tracks/${audioData.name}.mp3`;
+    }
+
+    musicData.currentNumber += 1;
+    renderPlayer($player);
+    $player.insertAdjacentHTML('afterbegin', getAudioControls())
+    let $trackImage; 
+    let $trackInfo;
+    const $startTrack = $player.querySelector('#play-control');
+    const $pauseTrack = $player.querySelector('#pause-control');
+    const $nextButton = $player.querySelector('#right-control');
+    const $previousButton = $player.querySelector('#left-control');
+    nextTrack($nextButton, $trackImage, $trackInfo);
+    previousTrack($previousButton, $trackImage, $trackInfo);
+    startPlaySong($startTrack, $pauseTrack);
+    pauseSong($startTrack, $pauseTrack);
+}
+
+function renderPlayer() {
+    getNewTrack();
+    $player.insertAdjacentHTML('beforeend', getAudioImage())
+    $player.insertAdjacentHTML('beforeend', pushTrack())
+}
+
+function startPlaySong($startTrack, $pauseTrack) {
+    $startTrack.addEventListener('click', () => {
+        musicData.track.play();
+        console.log(musicData)
+        $startTrack.style.display = 'none'
+        $pauseTrack.style.display = 'block'
+    })
+}
+
+function pauseSong($startTrack ,$pauseTrack) {
+    $pauseTrack.addEventListener('click', () => {
+        $startTrack.style.display = 'block'
+        $pauseTrack.style.display = 'none'
+        musicData.track.pause();
+    })
+}
+
+function nextTrack($nextButton, $trackImage, $trackInfo) {
+    $nextButton.addEventListener('click', () => {
+        musicData.currentNumber += 1
+        $trackInfo = $player.querySelector('.audioplayer__song-info');
+        $trackImage = $player.querySelector('#audioplayer-main-image');
+        $trackImage.remove();
+        $trackInfo.remove();
+        renderPlayer();
+    })
+}
+
+function previousTrack($previousButton, $trackImage, $trackInfo) {
+    $previousButton.addEventListener('click', () => {
+        musicData.currentNumber -= 1
+        $trackInfo = $player.querySelector('.audioplayer__song-info');
+        $trackImage = $player.querySelector('#audioplayer-main-image');
+        $trackImage.remove();
+        $trackInfo.remove();
+        renderPlayer();
+    })
+}
+
+function getNewTrack() {
+    musicData.track = new Audio(base[2].values[musicData.currentNumber].url);
+    return musicData;
 }

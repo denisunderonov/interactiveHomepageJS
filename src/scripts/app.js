@@ -1,6 +1,7 @@
 import { base } from "./data";
 import { initeNote } from "./utils";
-import { addClick, calculatorFunctionalOn, calculatorRender, delItem, pushItem } from "./template";
+import { addClick, calculatorFunctionalOn, calculatorRender, delItem, pushItem, addTrackData, renderPlayer } from "./template";
+import { barDown, musicBar } from "./anime";
 
 const $app = document.querySelector('#todo');
 $app.innerHTML = initeNote(base[0], base[1]);
@@ -16,6 +17,10 @@ const $inputNoteList = document.querySelector('#note-input');
 const $notePlusButton = $noteslist.querySelector('.plus-button');
 //калькулятор 
 const $calculator = document.querySelector('#calculatorblock');
+//плеер 
+export const $player = document.querySelector('#audioplayer');
+
+
 
 
 export class App {
@@ -26,6 +31,8 @@ export class App {
         this.checkListStart();
         this.noteslistStart();
         this.calculatorStart();
+        this.trackBarStart();
+        this.animations();
     }
 
     checkListStart() {
@@ -44,5 +51,14 @@ export class App {
         calculatorRender($calculator);
         calculatorFunctionalOn($calculator);
     }
+
+    trackBarStart() {
+        addTrackData();
+    }
+
+    animations() {
+        musicBar($player)
+    }
+
 
 }
