@@ -1,26 +1,23 @@
 // path — встроенный в Node.js модуль
-const path = require('path')
+const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'development',
   entry: './src/scripts/script.js',
   devServer: {
     static: {
-      directory: path.join(__dirname, 'src'), // Путь к статическим файлам
+      directory: path.join(__dirname, 'src'), 
     },
-    hot: true, // Включение Hot Module Replacement
-    port: 7000, // Порт для запуска сервера (необязательно)
+    hot: true, 
+    port: 7000, 
   },
-  // Описываем, куда следует поместить результат работы:
   output: {
-    // Путь до директории (важно использовать path.resolve):
     path: path.resolve(__dirname, 'dist'),
-    // Имя файла со сборкой:
     filename: 'bundle.js'
   },
   module: {
     rules: [
-      // ...другие правила
     {
       test: /\.svg$/,
       use: [
@@ -41,5 +38,12 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
     }
     ]
-  }
+  },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        { from: 'src', to: '' }, 
+      ],
+    }),
+  ]
 }
