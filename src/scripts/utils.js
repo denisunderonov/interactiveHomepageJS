@@ -111,3 +111,17 @@ export function getAudioControls() {
 export function getAudioImage() {
     return `<img id="audioplayer-main-image" src="${base[2].values[musicData.currentNumber].trackImage}" alt="">`
 }
+
+export function getPlaylistIcon() {
+    return `<img src="./img/playlist.svg" alt="">`
+}
+
+export function toSec(duration) {
+    let minutes = Math.floor(duration / 60000);
+    let seconds = ((duration % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+}
+
+export function buttonPlaylist() {
+    return `<img src="./img/playlist.svg" class="playlist-img" alt="">`
+} 

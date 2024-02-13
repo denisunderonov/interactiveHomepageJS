@@ -2,7 +2,8 @@ const clientId = 'c30058818b0743d7845c4327e4d39bb5';
 const clientSecret = '9c21ce36cf3149758b9394eb9e96910c'
 const url = 'https://accounts.spotify.com/api/token'
 let accessToken;
-export const track_id = ['2t33vDAERvsbqTLQuphuwA', '2kLmAwQCBSlvtcptioAoTv', '2WWlNStuw5Tqg5noCtR7oq']
+export const track_id = ['2t33vDAERvsbqTLQuphuwA', '2kLmAwQCBSlvtcptioAoTv', '2WWlNStuw5Tqg5noCtR7oq',
+'1Ck6nc8m3uVBY0r4TRfd1e', ]
 //аудиофайлы
 
 

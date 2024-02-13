@@ -398,5 +398,120 @@ button:active {
     opacity:70%;
 }
 
+.audioplayer__song-info {
+    width: 20%;
+}
+
+@keyframes hoverPlaylist {
+    from {
+        width: 65px;
+        height: auto;
+    }
+    to {
+        width: 75px;
+        height: auto;
+    }
+}
+
+@keyframes hoverPlaylistout {
+    from {
+        width: 75px;
+        height: auto;
+    }
+    to {
+        width: 65px;
+        height: auto;
+    }
+}
+
+#playlist {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+}
+
+#playlist img {
+    width: 65px;
+    height: auto;
+}
+
+#playlist img.hoverAnim {
+    animation-name: hoverPlaylist;
+    animation-duration: 0.5s;
+    animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    animation-fill-mode: forwards;
+}
+
+#playlist img.backToAnim {
+    animation-name: hoverPlaylistout;
+    animation-duration: 1s;
+    animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    animation-fill-mode: forwards;
+}
+
+#playlist .playlist-tracks {
+    background-color: #fff;
+    height: fit-content;
+    display: none;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.playlist-tracks div {
+    padding: 10px;
+}
+
+.playlist-tracks div:hover {
+    opacity: 90%;
+}
+
+.playlist-close:hover {
+    opacity: 90%;
+}
+
+.playlist-close:active {
+    opacity: 60%;
+}
+
+.playlist-tracks div:active {
+    opacity: 60%;
+}
+
+.playlist-element {
+    display: flex;
+    gap: 10px;
+    -webkit-box-shadow: 0px 4px 13px 0px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 4px 13px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 4px 13px 0px rgba(34, 60, 80, 0.2);
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #fff8f8;
+}
+
+.playlist-duration {
+    margin-left: auto;
+}
+
+.playlist-artist {
+    font-weight: bold;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+.playlist-track {
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: normal
+}
+
+.playlist-close {
+    display: block;
+    width: 10px;
+    position: absolute;
+    top: 0;
+    right: -70px;
+}
+
 
 

@@ -5,6 +5,8 @@ import { getProfile } from "./audio";
 import { track_id } from "./audio";
 import { $player } from "./app";
 
+export let $trackImage; 
+export let $trackInfo;
 
 export const todoState = {
     checkId: 0,
@@ -149,28 +151,25 @@ export async function addTrackData() {
     musicData.currentNumber += 1;
     renderPlayer($player);
     $player.insertAdjacentHTML('afterbegin', getAudioControls())
-    let $trackImage; 
-    let $trackInfo;
-    const $startTrack = $player.querySelector('#play-control');
-    const $pauseTrack = $player.querySelector('#pause-control');
-    const $nextButton = $player.querySelector('#right-control');
-    const $previousButton = $player.querySelector('#left-control');
-    nextTrack($nextButton, $trackImage, $trackInfo);
-    previousTrack($previousButton, $trackImage, $trackInfo);
+    let $startTrack = $player.querySelector('#play-control');
+    let $pauseTrack = $player.querySelector('#pause-control');
+    let $nextButton = $player.querySelector('#right-control');
+    let $previousButton = $player.querySelector('#left-control');
     startPlaySong($startTrack, $pauseTrack);
     pauseSong($startTrack, $pauseTrack);
+    nextTrack($nextButton, $trackImage, $trackInfo, $startTrack, $pauseTrack);
+    previousTrack($previousButton, $trackImage, $trackInfo, $startTrack, $pauseTrack);
 }
 
-function renderPlayer() {
+export function renderPlayer() {
     getNewTrack();
     $player.insertAdjacentHTML('beforeend', getAudioImage())
     $player.insertAdjacentHTML('beforeend', pushTrack())
 }
 
-function startPlaySong($startTrack, $pauseTrack) {
+export function startPlaySong($startTrack, $pauseTrack) {
     $startTrack.addEventListener('click', () => {
         musicData.track.play();
-        console.log(musicData)
         $startTrack.style.display = 'none'
         $pauseTrack.style.display = 'block'
     })
@@ -184,9 +183,17 @@ function pauseSong($startTrack ,$pauseTrack) {
     })
 }
 
-function nextTrack($nextButton, $trackImage, $trackInfo) {
+function nextTrack($nextButton, $trackImage, $trackInfo, $startTrack, $pauseTrack) {
     $nextButton.addEventListener('click', () => {
+        musicData.track.pause();
         musicData.currentNumber += 1
+        if (musicData.currentNumber > track_id.length - 1) {
+            musicData.currentNumber = 0
+        }
+        $startTrack = $player.querySelector('#play-control');
+        $pauseTrack = $player.querySelector('#pause-control');
+        $startTrack.style.display = 'block'
+        $pauseTrack.style.display = 'none'
         $trackInfo = $player.querySelector('.audioplayer__song-info');
         $trackImage = $player.querySelector('#audioplayer-main-image');
         $trackImage.remove();
@@ -195,9 +202,17 @@ function nextTrack($nextButton, $trackImage, $trackInfo) {
     })
 }
 
-function previousTrack($previousButton, $trackImage, $trackInfo) {
+function previousTrack($previousButton, $trackImage, $trackInfo, $startTrack, $pauseTrack) {
     $previousButton.addEventListener('click', () => {
+        musicData.track.pause();
         musicData.currentNumber -= 1
+        if (musicData.currentNumber < 0) {
+            musicData.currentNumber = track_id.length - 1
+        }
+        $startTrack = $player.querySelector('#play-control');
+        $pauseTrack = $player.querySelector('#pause-control');
+        $startTrack.style.display = 'block'
+        $pauseTrack.style.display = 'none'
         $trackInfo = $player.querySelector('.audioplayer__song-info');
         $trackImage = $player.querySelector('#audioplayer-main-image');
         $trackImage.remove();
