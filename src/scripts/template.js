@@ -1,9 +1,21 @@
+
 import { base } from "./data";
-import { addItem, back, toCalcbase, calcBase, sqrt } from "./utils";
+import { addItem, back, toCalcbase, calcBase, sqrt, pushTrack, getAudioControls, getAudioImage } from "./utils";
+import { getProfile } from "./audio";
+import { track_id } from "./audio";
+import { $player } from "./app";
+
+export let $trackImage; 
+export let $trackInfo;
 
 export const todoState = {
     checkId: 0,
     noteId: 0
+}
+
+export const musicData = {
+    track: '',
+    currentNumber: -1
 }
 
 export function addClick($addItemButton, $inputlist, $plusButton) {
@@ -117,4 +129,99 @@ export function calculatorFunctionalOn($calculator) {
             }
         });
     });
+}
+
+export async function addTrackData() {
+    for (let i = 0; i < track_id.length; i++) {
+        const audioData = await getProfile(i);
+        // if (audioData.preview_url === null) {
+        //     console.log('песни нет')
+        //     break;
+        // } 
+        base[2].values[i] = {}
+        base[2].values[i].listId = i
+        base[2].values[i].id = audioData.id;
+        base[2].values[i].trackName = audioData.name;
+        base[2].values[i].artist = audioData.artists[0].name;
+        base[2].values[i].duration = audioData.duration_ms;
+        base[2].values[i].trackImage = audioData.album.images[0].url;
+        base[2].values[i].url = `../tracks/${audioData.name}.mp3`;
+    }
+
+    musicData.currentNumber += 1;
+    renderPlayer($player);
+    $player.insertAdjacentHTML('afterbegin', getAudioControls())
+    let $startTrack = $player.querySelector('#play-control');
+    let $pauseTrack = $player.querySelector('#pause-control');
+    let $nextButton = $player.querySelector('#right-control');
+    let $previousButton = $player.querySelector('#left-control');
+    startPlaySong($startTrack, $pauseTrack);
+    pauseSong($startTrack, $pauseTrack);
+    nextTrack($nextButton, $trackImage, $trackInfo, $startTrack, $pauseTrack);
+    previousTrack($previousButton, $trackImage, $trackInfo, $startTrack, $pauseTrack);
+}
+
+export function renderPlayer() {
+    getNewTrack();
+    $player.insertAdjacentHTML('beforeend', getAudioImage())
+    $player.insertAdjacentHTML('beforeend', pushTrack())
+}
+
+export function startPlaySong($startTrack, $pauseTrack) {
+    $startTrack.addEventListener('click', () => {
+        musicData.track.play();
+        $startTrack.style.display = 'none'
+        $pauseTrack.style.display = 'block'
+    })
+}
+
+function pauseSong($startTrack ,$pauseTrack) {
+    $pauseTrack.addEventListener('click', () => {
+        $startTrack.style.display = 'block'
+        $pauseTrack.style.display = 'none'
+        musicData.track.pause();
+    })
+}
+
+function nextTrack($nextButton, $trackImage, $trackInfo, $startTrack, $pauseTrack) {
+    $nextButton.addEventListener('click', () => {
+        musicData.track.pause();
+        musicData.currentNumber += 1
+        if (musicData.currentNumber > track_id.length - 1) {
+            musicData.currentNumber = 0
+        }
+        $startTrack = $player.querySelector('#play-control');
+        $pauseTrack = $player.querySelector('#pause-control');
+        $startTrack.style.display = 'block'
+        $pauseTrack.style.display = 'none'
+        $trackInfo = $player.querySelector('.audioplayer__song-info');
+        $trackImage = $player.querySelector('#audioplayer-main-image');
+        $trackImage.remove();
+        $trackInfo.remove();
+        renderPlayer();
+    })
+}
+
+function previousTrack($previousButton, $trackImage, $trackInfo, $startTrack, $pauseTrack) {
+    $previousButton.addEventListener('click', () => {
+        musicData.track.pause();
+        musicData.currentNumber -= 1
+        if (musicData.currentNumber < 0) {
+            musicData.currentNumber = track_id.length - 1
+        }
+        $startTrack = $player.querySelector('#play-control');
+        $pauseTrack = $player.querySelector('#pause-control');
+        $startTrack.style.display = 'block'
+        $pauseTrack.style.display = 'none'
+        $trackInfo = $player.querySelector('.audioplayer__song-info');
+        $trackImage = $player.querySelector('#audioplayer-main-image');
+        $trackImage.remove();
+        $trackInfo.remove();
+        renderPlayer();
+    })
+}
+
+function getNewTrack() {
+    musicData.track = new Audio(base[2].values[musicData.currentNumber].url);
+    return musicData;
 }

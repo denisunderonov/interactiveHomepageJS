@@ -1,4 +1,9 @@
-import { todoState } from "./template"
+import { todoState, musicData } from "./template"
+import { base } from "./data";
+import playSVG from '../img/play.svg';
+import pauseSVG from '../img/pause.svg';
+import leftSVG from '../img/left.svg';
+import rightSVG from '../img/right.svg';
 
 export function addItem(type, content) {
     if (type === 'checklist') {
@@ -82,3 +87,41 @@ export function calcBase(state, $input) {
             }
             state.firstNum = 0;
 }
+
+export function pushTrack() {
+    return `
+    <div class="audioplayer__song-info">
+        <p id="audioplayer__artist-name">${base[2].values[musicData.currentNumber].artist}</p>
+        <p id="audioplayer__song-name">${base[2].values[musicData.currentNumber].trackName}</p>
+    </div>
+    `
+}
+
+export function getAudioControls() {
+    return `
+    <div class="audioplayer__controls">
+        <img id="left-control" src="${leftSVG}" alt="">
+        <img id="play-control" src="${playSVG}" alt="">
+        <img id="pause-control" src="${pauseSVG}" alt="">
+        <img id="right-control" src="${rightSVG}" alt="">
+    </div>
+    `
+}
+
+export function getAudioImage() {
+    return `<img id="audioplayer-main-image" src="${base[2].values[musicData.currentNumber].trackImage}" alt="">`
+}
+
+export function getPlaylistIcon() {
+    return `<img src="./img/playlist.svg" alt="">`
+}
+
+export function toSec(duration) {
+    let minutes = Math.floor(duration / 60000);
+    let seconds = ((duration % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+}
+
+export function buttonPlaylist() {
+    return `<img src="./img/playlist.svg" class="playlist-img" alt="">`
+} 
